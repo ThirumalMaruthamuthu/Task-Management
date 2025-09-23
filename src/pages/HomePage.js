@@ -104,7 +104,7 @@ export default function HomePage() {
       />
       {/* Pagination and Table count */}
       <div className="flex justify-between">
-        <div className="flex items-center gap-2 my-2">
+        <div className="flex items-center gap-2 mt-2">
           <label className="text-sm text-gray-700">Rows per page:</label>
           <select
             value={pageSize}

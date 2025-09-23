@@ -1,25 +1,29 @@
 import React from "react";
+import { IconButton } from "@mui/material";
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
-export default function Pagination({ currentPage, setCurrentPage, pageCount,nextDisabled }) {
+export default function Pagination({ currentPage, setCurrentPage, pageCount }) {
   return (
-    <div className="flex gap-2 mt-4">
-      <button
+    <div className="flex items-center gap-2 mt-2">
+      <IconButton
+        onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
         disabled={currentPage === 1}
-        onClick={() => setCurrentPage((p) => p - 1)}
-        className="px-3 py-1 bg-blue-500 text-white border rounded"
+        color="primary"
       >
-        Prev
-      </button>
-      <span>
-        Page {currentPage} / {pageCount}
+        <ArrowBackIos />
+      </IconButton>
+
+      <span className="font-medium">
+        Pages {currentPage} / {pageCount}
       </span>
-      <button
-        disabled={pageCount === 0}
-        onClick={() => setCurrentPage((p) => p + 1)}
-        className="px-3 py-1 bg-blue-600 text-white border rounded"
+
+      <IconButton
+        onClick={() => setCurrentPage((p) => Math.min(p + 1, pageCount))}
+        disabled={pageCount === 0 }
+        color="primary"
       >
-        Next
-      </button> 
+        <ArrowForwardIos />
+      </IconButton>
     </div>
   );
 }
