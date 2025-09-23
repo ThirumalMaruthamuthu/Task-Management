@@ -33,7 +33,7 @@ export default function HomePage() {
     setSortConfig({ key: null, direction: null });
   };
 
-  // ✅ Sorting logic
+  //  Sorting
   const sortedRows = useMemo(() => {
     if (!sortConfig.key) return rows;
 
@@ -54,7 +54,7 @@ export default function HomePage() {
     return sorted;
   }, [rows, sortConfig]);
 
-  // ✅ Pagination (applied after sorting)
+  //  Pagination
   const pageCount = Math.ceil(sortedRows.length / pageSize);
   const start = (currentPage - 1) * pageSize;
   const pageRows = sortedRows.slice(start, start + pageSize);
@@ -102,6 +102,7 @@ export default function HomePage() {
         <option value={30}>30</option>
       </select>
     </div>
+
     <Pagination
       currentPage={currentPage}
       setCurrentPage={setCurrentPage}

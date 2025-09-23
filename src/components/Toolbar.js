@@ -16,10 +16,10 @@ export default function Toolbar({ onGenerate, onReset, rows, columns }) {
   return (
     <div className="flex gap-2 mb-4">
       <button onClick={onGenerate} className="px-3 py-2 bg-green-500 text-white rounded">
-        Generate 10,000 Sample Rows
+        Generate
       </button>
       <button onClick={downloadCSV} className="px-3 py-2 bg-blue-500 text-white rounded">
-        Download CSV
+        Download
       </button>
       <button onClick={onReset} className="px-3 py-2 bg-red-500 text-white rounded">
         Reset All
