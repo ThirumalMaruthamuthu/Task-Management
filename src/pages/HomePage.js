@@ -59,55 +59,73 @@ export default function HomePage() {
   const start = (currentPage - 1) * pageSize;
   const pageRows = sortedRows.slice(start, start + pageSize);
 
+
+  const handleCellChange = (rowIndex, column, newValue) => {
+  setRows(prevRows => {
+    const updatedRows = [...prevRows];
+    updatedRows[rowIndex] = {
+      ...updatedRows[rowIndex],
+      [column]: newValue,
+      _edited: true, 
+    };
+    return updatedRows;
+  });
+};
+
   return (
-  <div className="p-4">
-    <h1 className="text-2xl font-bold mb-4">📚 Book CSV Editor</h1>
-    <Toolbar
-      onGenerate={handleGenerate}
-      onReset={resetAll}
-      rows={rows}
-      columns={columns}
-    />
-    <FileUploader onUpload={handleUpload} />
+    <div className="p-4">
+        {/* Toolbar */}
+      <h1 className="text-2xl font-bold mb-4">Book CSV Editor</h1>
+      <Toolbar
+        onGenerate={handleGenerate}
+        onReset={resetAll}
+        rows={rows}
+        columns={columns}
+        downloadDisabled={pageRows.length ===0}
+      />
+      <FileUploader onUpload={handleUpload} />
 
-  
+      {/* Table Data Count */}
+      <div className="flex justify-between items-center my-2 text-sm text-gray-700">
+        <span>
+          Showing {pageRows.length} of {sortedRows.length} entries
+        </span>
+        <span>Total rows: {rows.length}</span>
+      </div>
 
-    {/* Table Data Count */}
-    <div className="flex justify-between items-center my-2 text-sm text-gray-700">
-      <span>
-        Showing {pageRows.length} of {sortedRows.length} entries
-      </span>
-      <span>Total rows: {rows.length}</span>
+      {/* Table Data */}
+
+      <BookTable
+        rows={pageRows}
+        columns={columns}
+        sortConfig={sortConfig}
+        setSortConfig={setSortConfig}
+        onCellChange={handleCellChange}
+      />
+      {/* Pagination and Table count */}
+      <div className="flex justify-between">
+        <div className="flex items-center gap-2 my-2">
+          <label className="text-sm text-gray-700">Rows per page:</label>
+          <select
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+              setCurrentPage(1);
+            }}
+            className="border px-2 py-1 rounded"
+          >
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={30}>30</option>
+          </select>
+        </div>
+
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          pageCount={pageCount}
+        />
+      </div>
     </div>
-
-    <BookTable
-      rows={pageRows}
-      columns={columns}
-      sortConfig={sortConfig}
-      setSortConfig={setSortConfig}
-    />
-
-<div className="flex items-center gap-2 my-2">
-      <label className="text-sm text-gray-700">Rows per page:</label>
-      <select
-        value={pageSize}
-        onChange={(e) => {
-          setPageSize(Number(e.target.value));
-          setCurrentPage(1);
-        }}
-        className="border px-2 py-1 rounded"
-      >
-        <option value={10}>10</option>
-        <option value={20}>20</option>
-        <option value={30}>30</option>
-      </select>
-    </div>
-
-    <Pagination
-      currentPage={currentPage}
-      setCurrentPage={setCurrentPage}
-      pageCount={pageCount}
-    />
-  </div>
-);
+  );
 }
