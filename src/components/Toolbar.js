@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 
-export default function Toolbar({ onGenerate, onReset, rows, columns,downloadDisabled }) {
+export default function Toolbar({ onGenerate, onReset, rows, columns }) {
+  const [generated, setGenerated] = useState(false);
+
+  const handleGenerateClick = () => {
+    if (generated) {
+      alert("Data already generated! Reset before generating again.");
+      return;
+    }
+    onGenerate();
+    setGenerated(true);
+  };
+
+  const handleResetClick = () => {
+    onReset();
+    setGenerated(false); 
+  };
+
   const handleDownload = () => {
+    if (!rows || rows.length === 0) {
+      alert("No data available to download!");
+      return;
+    }
+
     const csvContent = [
       columns.join(","),
       ...rows.map(row => columns.map(c => row[c]).join(",")),
@@ -19,13 +40,22 @@ export default function Toolbar({ onGenerate, onReset, rows, columns,downloadDis
 
   return (
     <div className="flex gap-2 mb-4">
-      <button onClick={onGenerate} className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+      <button
+        onClick={handleGenerateClick}
+        className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+      >
         Generate Data
       </button>
-      <button onClick={onReset} className="px-4 py-2 bg-yellow-400 text-white rounded hover:bg-yellow-500">
+      <button
+        onClick={handleResetClick}
+        className="px-4 py-2 bg-yellow-400 text-white rounded hover:bg-yellow-500"
+      >
         Reset Edits
       </button>
-      <button onClick={handleDownload} disabled={downloadDisabled} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+      <button
+        onClick={handleDownload}
+        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+      >
         Download CSV
       </button>
     </div>
