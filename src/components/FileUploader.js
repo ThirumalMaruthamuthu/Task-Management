@@ -17,12 +17,18 @@ export default function FileUploader({ onUpload }) {
 
   return (
     <div className="my-4">
-      <input
-        type="file"
-        accept=".csv"
-        onChange={handleChange}
-        className="border-2 border-gray-300 rounded-md px-3 py-2 w-100 cursor-pointer hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-300"
-      />
+      <label className="block w-full cursor-pointer">
+        <span className="block text-sm font-medium text-gray-700 mb-1">
+          Upload CSV
+        </span>
+        <input
+          type="file"
+          accept=".csv,text/csv"
+          onChange={handleChange}
+          className="block w-full text-sm text-gray-700 border border-gray-300 rounded-md
+                     px-3 py-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </label>
     </div>
   );
 }
