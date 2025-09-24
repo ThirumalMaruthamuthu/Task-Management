@@ -15,12 +15,11 @@ export default function HomePage() {
   const [pageSize, setPageSize] = useState(20);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
 
-  const handleUpload = (file) => {
-    parseCSV(file, (data) => {
-      setRows(data);
-      setOriginalRows([...data]);
-    });
-  };
+const handleUpload = (data) => {
+  setRows(data);
+  setOriginalRows([...data]);
+};
+
 
   const handleGenerate = () => {
     const data = generateFakeBooks(10000);
