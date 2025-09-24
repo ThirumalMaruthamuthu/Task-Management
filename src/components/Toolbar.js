@@ -1,20 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 
 export default function Toolbar({ onGenerate, onReset, rows, columns }) {
-  const [generated, setGenerated] = useState(false);
-
   const handleGenerateClick = () => {
-    if (generated) {
+    if (rows && rows.length > 0) {
       alert("Data already generated! Reset before generating again.");
       return;
     }
     onGenerate();
-    setGenerated(true);
   };
 
   const handleResetClick = () => {
     onReset();
-    setGenerated(false); 
   };
 
   const handleDownload = () => {
@@ -25,7 +21,7 @@ export default function Toolbar({ onGenerate, onReset, rows, columns }) {
 
     const csvContent = [
       columns.join(","),
-      ...rows.map(row => columns.map(c => row[c]).join(",")),
+      ...rows.map((row) => columns.map((c) => row[c]).join(",")),
     ].join("\n");
 
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
